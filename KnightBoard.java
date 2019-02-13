@@ -1,5 +1,6 @@
 public class KnightBoard{
   private int[][] board;
+  private int[][] moves;
   public static void main(String[] args){
     KnightBoard b = new KnightBoard(3,10);
     System.out.println(b);
@@ -7,6 +8,16 @@ public class KnightBoard{
   //@throws IllegalArgumentException when either parameter is negative.
   public KnightBoard(int startingRows,int startingCols){
     board = new int[startingRows][startingCols];
+    moves = new int[][]{
+      {1,2},
+      {1,-2},
+      {-1,2},
+      {-1,-2},
+      {2,1},
+      {2,-1},
+      {-2,1},
+      {-2,-1};
+    };
   }
   public String toString(){
     String ans = "";
@@ -41,12 +52,6 @@ public class KnightBoard{
     }
 
     return false;
-  }
-  private boolean addKnight(int r, int c, int l){
-    board[r][c]=l;
-  }
-  private boolean removeKnight(int r, int c){
-    board[r][c]=0;
   }
   /*
   @throws IllegalStateException when the board contains non-zero values.
