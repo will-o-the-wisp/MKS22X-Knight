@@ -2,7 +2,8 @@ public class KnightBoard{
   private int[][] board;
   private int[][] moves;
   public static void main(String[] args){
-    KnightBoard b = new KnightBoard(3,10);
+    KnightBoard b = new KnightBoard(5,5);
+    b.solve(0,0);
     System.out.println(b);
   }
   //@throws IllegalArgumentException when either parameter is negative.
@@ -16,7 +17,7 @@ public class KnightBoard{
       {2,1},
       {2,-1},
       {-2,1},
-      {-2,-1};
+      {-2,-1},
     };
   }
   public String toString(){
@@ -47,10 +48,22 @@ public class KnightBoard{
     return solveH(startingRow, startingCol, 0);
   }
   private boolean solveH(int row, int col, int level){
-    if(level==board.length*board[0].length){
+    if(level==board.length*board[0].length-1){
       return true;
     }
-
+    for(int i=0;i<moves.length;i++){
+      if(row+moves[i][0]<board.length&&
+         row+moves[i][0]>0&&
+         col+moves[i][1]<board[0].length&&
+         col+moves[i][1]>0&&
+         board[row+moves[i][0]][col+moves[i][1]]==0){
+            board[row+moves[i][0]][col+moves[i][1]]=level;
+            if(solveH(row+moves[i][0],col+moves[i][1],level+1)){
+              return true;
+            }
+            board[row+moves[i][0]][col+moves[i][1]]=0;
+         }
+    }
     return false;
   }
   /*
