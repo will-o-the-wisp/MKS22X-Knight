@@ -2,7 +2,7 @@ public class KnightBoard{
   private int[][] board;
   private int[][] moves;
   public static void main(String[] args){
-    KnightBoard b = new KnightBoard(5,5);
+    KnightBoard b = new KnightBoard(6,10);
     b.solve(0,0);
     System.out.println(b);
   }
@@ -45,10 +45,15 @@ public class KnightBoard{
   or out of bounds.
   */
   public boolean solve(int startingRow, int startingCol){
-    return solveH(startingRow, startingCol, 1);
+    board[startingRow][startingCol]=1;
+    boolean ans = solveH(startingRow, startingCol, 2);
+    if(!ans){
+      board[startingRow][startingCol]=0;
+    }
+    return ans;
   }
   private boolean solveH(int row, int col, int level){
-    if(level==board.length*board[0].length-1){
+    if(level==board.length*board[0].length+1){
       return true;
     }
     for(int i=0;i<moves.length;i++){
