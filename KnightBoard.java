@@ -45,7 +45,7 @@ public class KnightBoard{
   or out of bounds.
   */
   public boolean solve(int startingRow, int startingCol){
-    return solveH(startingRow, startingCol, 0);
+    return solveH(startingRow, startingCol, 1);
   }
   private boolean solveH(int row, int col, int level){
     if(level==board.length*board[0].length-1){
@@ -53,10 +53,11 @@ public class KnightBoard{
     }
     for(int i=0;i<moves.length;i++){
       if(row+moves[i][0]<board.length&&
-         row+moves[i][0]>0&&
+         row+moves[i][0]>=0&&
          col+moves[i][1]<board[0].length&&
-         col+moves[i][1]>0&&
-         board[row+moves[i][0]][col+moves[i][1]]==0){
+         col+moves[i][1]>=0&&
+         board[row+moves[i][0]][col+moves[i][1]]==0)
+         {
             board[row+moves[i][0]][col+moves[i][1]]=level;
             if(solveH(row+moves[i][0],col+moves[i][1],level+1)){
               return true;
