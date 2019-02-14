@@ -71,13 +71,7 @@ public class KnightBoard{
       return true;
     }
     for(int i=0;i<moves.length;i++){
-      if(row+moves[i][0]<board.length&&
-         row+moves[i][0]>=0&&
-         col+moves[i][1]<board[0].length&&
-         col+moves[i][1]>=0&&
-         board[row+moves[i][0]][col+moves[i][1]]==0)
-         {
-            board[row+moves[i][0]][col+moves[i][1]]=level;
+      if(addKnight(row+moves[i][0],col+moves[i][1],level)){
             if(solveH(row+moves[i][0],col+moves[i][1],level+1)){
               return true;
             }
@@ -85,6 +79,20 @@ public class KnightBoard{
          }
     }
     return false;
+  }
+  private boolean addKnight(int r, int c, int l){
+    if(r<board.length&&
+        r>=0&&
+        c<board[0].length&&
+        c>=0&&
+        board[r][c]==0){
+          board[r][c]=l;
+          return true;
+        }
+    return false;
+  }
+  private void removeKnight(int r, int c){
+
   }
   /*
   @throws IllegalStateException when the board contains non-zero values.
