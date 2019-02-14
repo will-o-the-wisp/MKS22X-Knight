@@ -75,7 +75,7 @@ public class KnightBoard{
             if(solveH(row+moves[i][0],col+moves[i][1],level+1)){
               return true;
             }
-            board[row+moves[i][0]][col+moves[i][1]]=0;
+            removeKnight(row+moves[i][0],col+moves[i][1]);
          }
     }
     return false;
@@ -92,7 +92,7 @@ public class KnightBoard{
     return false;
   }
   private void removeKnight(int r, int c){
-
+    board[r][c]=0;
   }
   /*
   @throws IllegalStateException when the board contains non-zero values.
