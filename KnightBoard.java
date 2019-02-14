@@ -20,6 +20,7 @@ public class KnightBoard{
       throw new IllegalArgumentException();
     }
     board = new int[startingRows][startingCols];
+    outgoing = new int[startingRows][startingCols];
     moves = new int[][]{
       {1,2},
       {1,-2},
@@ -30,6 +31,13 @@ public class KnightBoard{
       {-2,1},
       {-2,-1},
     };
+    if(startingRows==1||startingCols==1){
+      for(int i=0;i<outgoing.length;i++){
+        for(int j=0;j<outgoing[0].length;j++){
+          outgoing[i][j]=0;
+        }
+      }
+    }
   }
   public String toString(){
     String ans = "";
