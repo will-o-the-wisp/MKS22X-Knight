@@ -1,9 +1,17 @@
 public class KnightBoard{
   private int[][] board;
+  private int[][] outgoing;
   private int[][] moves;
   public static void main(String[] args){
     KnightBoard b = new KnightBoard(5,5);
-    b.solve(0,0);
+    int ans=0;
+    System.out.println(b.countSolutions(0,0));
+    /*for(int i=0;i<b.board.length;i++){
+      for(int j=0;j<b.board[0].length;j++){
+        ans+=b.countSolutions(i,j);
+      }
+    }*/
+    //System.out.println(ans);
     System.out.println(b);
   }
   //@throws IllegalArgumentException when either parameter is negative.
@@ -111,9 +119,22 @@ public class KnightBoard{
         }
       }
     }
-    return 0;
+    board[startingRow][startingCol]=1;
+    int ans=countSolutionsH(startingRow,startingCol,2);
+    board[startingRow][startingCol]=0;
+    return ans;
   }
   private int countSolutionsH(int row, int col, int level){
-    return 0;
+    int ans=0;
+    if(level==board.length*board[0].length+1){
+      return 1;
+    }
+    for(int i=0;i<moves.length;i++){
+      if(addKnight(row+moves[i][0],col+moves[i][1],level)){
+            ans+=countSolutionsH(row+moves[i][0],col+moves[i][1],level+1);
+            removeKnight(row+moves[i][0],col+moves[i][1]);
+         }
+    }
+    return ans;
   }
 }
