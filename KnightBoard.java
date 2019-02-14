@@ -2,12 +2,15 @@ public class KnightBoard{
   private int[][] board;
   private int[][] moves;
   public static void main(String[] args){
-    KnightBoard b = new KnightBoard(6,10);
+    KnightBoard b = new KnightBoard(5,5);
     b.solve(0,0);
     System.out.println(b);
   }
   //@throws IllegalArgumentException when either parameter is negative.
   public KnightBoard(int startingRows,int startingCols){
+    if(startingRows<=0||startingCols<=0){
+      throw new IllegalArgumentException();
+    }
     board = new int[startingRows][startingCols];
     moves = new int[][]{
       {1,2},
@@ -45,6 +48,17 @@ public class KnightBoard{
   or out of bounds.
   */
   public boolean solve(int startingRow, int startingCol){
+    if(startingRow<0||startingCol<0||startingRow>=board.length||
+    startingCol>=board[0].length){
+      throw new IllegalArgumentException();
+    }
+    for(int i=0;i<board.length;i++){
+      for(int j=0;j<board[0].length;j++){
+        if(board[i][j]!=0){
+          throw new IllegalStateException();
+        }
+      }
+    }
     board[startingRow][startingCol]=1;
     boolean ans = solveH(startingRow, startingCol, 2);
     if(!ans){
@@ -78,6 +92,20 @@ public class KnightBoard{
   or out of bounds.
   */
   public int countSolutions(int startingRow, int startingCol){
+    if(startingRow<0||startingCol<0||startingRow>=board.length||
+    startingCol>=board[0].length){
+      throw new IllegalArgumentException();
+    }
+    for(int i=0;i<board.length;i++){
+      for(int j=0;j<board[0].length;j++){
+        if(board[i][j]!=0){
+          throw new IllegalStateException();
+        }
+      }
+    }
+    return 0;
+  }
+  private int countSolutionsH(int row, int col, int level){
     return 0;
   }
 }
