@@ -3,7 +3,7 @@ public class KnightBoard{
   private int[][] outgoing;
   private int[][] moves;
   public static void main(String[] args){
-    KnightBoard b = new KnightBoard(5,5);
+    KnightBoard b = new KnightBoard(7,7);
     int ans=0;
     //System.out.println(b.countSolutions(0,0));
     /*for(int i=0;i<b.board.length;i++){
@@ -47,11 +47,11 @@ public class KnightBoard{
       outgoing[r-1][1]=3;
       outgoing[r-2][c-1]=3;
       outgoing[r-1][c-2]=3;
-      for(int j=2;i<c-1;i++){
+      for(int j=2;j<c-2;j++){
         outgoing[0][j]=4;
         outgoing[r-1][j]=4;
       }
-      for(int i=2;i<r-1;i++){
+      for(int i=2;i<r-2;i++){
         outgoing[i][0]=4;
         outgoing[i][c-1]=4;
       }
