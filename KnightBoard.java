@@ -145,4 +145,7 @@ public class KnightBoard{
     }
     return ans;
   }
+  private void fillOutgoing(){
+    
+  }
 }
