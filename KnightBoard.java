@@ -47,6 +47,10 @@ public class KnightBoard{
       outgoing[r-1][1]=3;
       outgoing[r-2][c-1]=3;
       outgoing[r-1][c-2]=3;
+      outgoing[1][1]=4;
+      outgoing[r-2][1]=4;
+      outgoing[1][r-2]=4;
+      outgoing[r-2][r-2]=4;
       for(int j=2;j<c-2;j++){
         outgoing[0][j]=4;
         outgoing[r-1][j]=4;
