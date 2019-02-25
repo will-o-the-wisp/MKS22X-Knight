@@ -5,7 +5,7 @@ public class KnightBoard{
   public static void main(String[] args){
     KnightBoard b = new KnightBoard(5,5);
     int ans=0;
-    System.out.println(b.countSolutions(0,0));
+    //System.out.println(b.countSolutions(0,0));
     /*for(int i=0;i<b.board.length;i++){
       for(int j=0;j<b.board[0].length;j++){
         ans+=b.countSolutions(i,j);
@@ -13,6 +13,7 @@ public class KnightBoard{
     }*/
     //System.out.println(ans);
     System.out.println(b);
+    System.out.println(b.printOutgoing());
   }
   //@throws IllegalArgumentException when either parameter is negative.
   public KnightBoard(int startingRows,int startingCols){
@@ -33,11 +34,27 @@ public class KnightBoard{
     };
     int r=startingRows;
     int c=startingCols;
-    if(r>=3&&c>=3){
+    if(r>=5&&c>=5){
       outgoing[0][0]=2;
       outgoing[0][c-1]=2;
-      outgoing[c-1][0]=2;
-      outgoing[c-1][c-1]=2;
+      outgoing[r-1][0]=2;
+      outgoing[r-1][c-1]=2;
+      outgoing[0][1]=3;
+      outgoing[1][0]=3;
+      outgoing[0][c-2]=3;
+      outgoing[1][c-1]=3;
+      outgoing[r-2][0]=3;
+      outgoing[r-1][1]=3;
+      outgoing[r-2][c-1]=3;
+      outgoing[r-1][c-2]=3;
+      for(int j=2;i<c-1;i++){
+        outgoing[0][j]=4;
+        outgoing[r-1][j]=4;
+      }
+      for(int i=2;i<r-1;i++){
+        outgoing[i][0]=4;
+        outgoing[i][c-1]=4;
+      }
     }
   }
   public String toString(){
@@ -52,6 +69,25 @@ public class KnightBoard{
         }
         else{
           ans+=board[i][j];
+        }
+        ans+=" ";
+      }
+      ans+="\n";
+    }
+    return ans;
+  }
+  private String printOutgoing(){
+    String ans = "";
+    for(int i=0;i<outgoing.length;i++){
+      for(int j=0;j<outgoing[0].length;j++){
+        if(outgoing[i][j]==0){
+          ans+=" _";
+        }
+        else if(outgoing[i][j]<10){
+          ans+=" "+outgoing[i][j];
+        }
+        else{
+          ans+=outgoing[i][j];
         }
         ans+=" ";
       }
