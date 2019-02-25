@@ -31,12 +31,13 @@ public class KnightBoard{
       {-2,1},
       {-2,-1},
     };
-    if(startingRows==1||startingCols==1){
-      for(int i=0;i<outgoing.length;i++){
-        for(int j=0;j<outgoing[0].length;j++){
-          outgoing[i][j]=0;
-        }
-      }
+    int r=startingRows;
+    int c=startingCols;
+    if(r>=3&&c>=3){
+      outgoing[0][0]=2;
+      outgoing[0][c-1]=2;
+      outgoing[c-1][0]=2;
+      outgoing[c-1][c-1]=2;
     }
   }
   public String toString(){
@@ -144,8 +145,5 @@ public class KnightBoard{
          }
     }
     return ans;
-  }
-  private void fillOutgoing(){
-    
   }
 }
