@@ -3,7 +3,7 @@ public class KnightBoard{
   private int[][] outgoing;
   private int[][] moves;
   public static void main(String[] args){
-    KnightBoard b = new KnightBoard(7,7);
+    KnightBoard b = new KnightBoard(4,8);
     int ans=0;
     //System.out.println(b.countSolutions(0,0));
     /*for(int i=0;i<b.board.length;i++){
@@ -14,14 +14,48 @@ public class KnightBoard{
     //System.out.println(ans);
     System.out.println(b);
     System.out.println(b.printOutgoing());
+    /*
+    */
+    for(int i=0;i<4;i++){
+      runTest(i);
+    }
   }
+  //testcase must be a valid index of your input/output array
+public static void runTest(int i){
+
+  KnightBoard b;
+  int[]m =   {4,5,5,5,5};
+  int[]n =   {4,5,4,5,5};
+  int[]startx = {0,0,0,1,2};
+  int[]starty = {0,0,0,1,2};
+  int[]answers = {0,304,32,56,64};
+  if(i >= 0 ){
+    try{
+      int correct = answers[i];
+      b = new KnightBoard(m[i%m.length],n[i%m.length]);
+
+      int ans  = b.countSolutions(startx[i],starty[i]);
+
+      if(correct==ans){
+        System.out.println("PASS board size: "+m[i%m.length]+"x"+n[i%m.length]+" "+ans);
+      }else{
+        System.out.println("FAIL board size: "+m[i%m.length]+"x"+n[i%m.length]+" "+ans+" vs "+correct);
+      }
+    }catch(Exception e){
+      System.out.println("FAIL Exception case: "+i);
+
+    }
+  }
+}
   //@throws IllegalArgumentException when either parameter is negative.
   public KnightBoard(int startingRows,int startingCols){
-    if(startingRows<=0||startingCols<=0){
+    int r=startingRows;
+    int c=startingCols;
+    if(r<=0||c<=0){
       throw new IllegalArgumentException();
     }
-    board = new int[startingRows][startingCols];
-    outgoing = new int[startingRows][startingCols];
+    board = new int[r][c];
+    outgoing = new int[r][c];
     moves = new int[][]{
       {1,2},
       {1,-2},
@@ -32,9 +66,8 @@ public class KnightBoard{
       {-2,1},
       {-2,-1},
     };
-    int r=startingRows;
-    int c=startingCols;
-    if(r>=5&&c>=5){
+
+    if(r>=4&&c>=4){
       outgoing[0][0]=2;
       outgoing[0][c-1]=2;
       outgoing[r-1][0]=2;
@@ -49,15 +82,24 @@ public class KnightBoard{
       outgoing[r-1][c-2]=3;
       outgoing[1][1]=4;
       outgoing[r-2][1]=4;
-      outgoing[1][r-2]=4;
-      outgoing[r-2][r-2]=4;
-      for(int j=2;j<c-2;j++){
-        outgoing[0][j]=4;
-        outgoing[r-1][j]=4;
-      }
+      outgoing[1][c-2]=4;
+      outgoing[r-2][c-2]=4;
       for(int i=2;i<r-2;i++){
         outgoing[i][0]=4;
+        outgoing[i][1]=6;
         outgoing[i][c-1]=4;
+        outgoing[i][c-2]=6;
+      }
+      for(int j=2;j<c-2;j++){
+        outgoing[0][j]=4;
+        outgoing[1][j]=6;
+        outgoing[r-1][j]=4;
+        outgoing[r-2][j]=6;
+      }
+      for(int i=2;i<r-2;i++){
+        for(int j=2;j<c-2;j++){
+          outgoing[i][j]=8;
+        }
       }
     }
   }
