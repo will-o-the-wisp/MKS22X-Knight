@@ -1,12 +1,17 @@
 import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class KnightBoard{
   private int[][] board;
+  private ArrayList<ArrayList<Integer>> possmoves;
   private int[][] outgoing;
   private int[][] moves;
   public static void main(String[] args){
-    KnightBoard b = new KnightBoard(7,7);
+    KnightBoard b = new KnightBoard(5,5);
     int ans=0;
+    System.out.println(b);
+    System.out.println(b.printOutgoing());
     b.solve(0,0);
     //System.out.println(b.countSolutions(0,0));
     /*for(int i=0;i<b.board.length;i++){
@@ -105,6 +110,14 @@ public static void runTest(int i){
         }
       }
     }
+    possmoves = new ArrayList<ArrayList<Integer>>();
+     for(int i=0;i<moves.length;i++){
+       possmoves.add(new ArrayList<Integer>());
+       possmoves.get(i).add(moves[i][0]);
+       possmoves.get(i).add(moves[i][1]);
+       possmoves.get(i).add(i);
+       possmoves.get(i).add(0);
+     }
   }
   public String toString(){
     String ans = "";
@@ -161,26 +174,53 @@ public static void runTest(int i){
         }
       }
     }
-    board[startingRow][startingCol]=1;
+    addKnight(startingRow,startingCol,1);
     boolean ans = solveH(startingRow, startingCol, 2);
     if(!ans){
-      board[startingRow][startingCol]=0;
+      removeKnight(startingRow,startingCol);
     }
     return ans;
+  }
+  private int indexOf(int[] ary, int val){
+    for(int i=0;i<ary.length;i++){
+      if(ary[i]==val){
+        return i;
+      }
+    }
+    return -1;
   }
   private boolean solveH(int row, int col, int level){
     if(level==board.length*board[0].length+1){
       return true;
     }
-    for(int i=0;i<moves.length;i++){
-      if(addKnight(row+moves[i][0],col+moves[i][1],level)){
-            if(solveH(row+moves[i][0],col+moves[i][1],level+1)){
-              return true;
-            }
-            removeKnight(row+moves[i][0],col+moves[i][1]);
-         }
+      for(int i=0;i<moves.length;i++){
+      if(row+moves[i][0]<board.length&&
+        row+moves[i][0]>=0&&
+        col+moves[i][1]<board[0].length&&
+        col+moves[i][1]>=0){
+          possmoves.get(i).set(3,outgoing[row+moves[i][0]][col+moves[i][1]]);
+      }
     }
+    Collections.sort(possmoves, new Comparator<ArrayList<Integer>>() {
+        private int compare(ArrayList<Integer> a1, ArrayList<Integer> a2){
+          return a1.get(3).compareTo(a2.get(3));
+        }
+    });
+    for(int j=0;j<possmoves.size();j++){
+          if(addKnight(row+possmoves.get(i).get(0),col+possmoves.get(i).get(1),level)){
+                if(solveH(row+possmoves.get(i).get(0),col+possmoves.get(i).get(1),level+1)){
+                  return true;
+                }
+              removeKnight(row+possmoves.get(i).get(0),col+possmoves.get(i).get(1));
+         }
+     }
     return false;
+  }
+  private boolean onBoardAfterMove(int r, int c, int i){
+    return r+moves[i][0]<board.length&&
+      r+moves[i][0]>=0&&
+      c+moves[i][1]<board[0].length&&
+      c+moves[i][1]>=0;
   }
   private boolean addKnight(int r, int c, int l){
     if(r<board.length&&
