@@ -1,10 +1,13 @@
+import java.util.Arrays;
+
 public class KnightBoard{
   private int[][] board;
   private int[][] outgoing;
   private int[][] moves;
   public static void main(String[] args){
-    KnightBoard b = new KnightBoard(4,8);
+    KnightBoard b = new KnightBoard(7,7);
     int ans=0;
+    b.solve(0,0);
     //System.out.println(b.countSolutions(0,0));
     /*for(int i=0;i<b.board.length;i++){
       for(int j=0;j<b.board[0].length;j++){
@@ -186,12 +189,28 @@ public static void runTest(int i){
         c>=0&&
         board[r][c]==0){
           board[r][c]=l;
+          for(int i=0;i<moves.length;i++){
+              if(r+moves[i][0]<board.length&&
+                r+moves[i][0]>=0&&
+                c+moves[i][1]<board[0].length&&
+                c+moves[i][1]>=0){
+                  outgoing[r+moves[i][0]][c+moves[i][1]]--;
+                }
+          }
           return true;
         }
     return false;
   }
   private void removeKnight(int r, int c){
     board[r][c]=0;
+    for(int i=0;i<moves.length;i++){
+        if(r+moves[i][0]<board.length&&
+          r+moves[i][0]>=0&&
+          c+moves[i][1]<board[0].length&&
+          c+moves[i][1]>=0){
+            outgoing[r+moves[i][0]][c+moves[i][1]]++;
+          }
+    }
   }
   /*
   @throws IllegalStateException when the board contains non-zero values.
