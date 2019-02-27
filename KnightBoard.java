@@ -1,6 +1,4 @@
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 public class KnightBoard{
   private int[][] board;
@@ -8,7 +6,7 @@ public class KnightBoard{
   private int[][] outgoing;
   private int[][] moves;
   public static void main(String[] args){
-    KnightBoard b = new KnightBoard(5,5);
+    KnightBoard b = new KnightBoard(15,15);
     int ans=0;
     System.out.println(b);
     System.out.println(b.printOutgoing());
@@ -189,11 +187,22 @@ public static void runTest(int i){
     }
     return -1;
   }
+  private static Comparator<ArrayList<Integer>> bymoves = new Comparator<ArrayList<Integer>>(){
+    public int compare(ArrayList<Integer> a1, ArrayList<Integer> a2){
+      return a1.get(3).compareTo(a2.get(3));
+    }
+  };
+  private static Comparator<ArrayList<Integer>> byorder = new Comparator<ArrayList<Integer>>(){
+    public int compare(ArrayList<Integer> a1, ArrayList<Integer> a2){
+      return a1.get(2).compareTo(a2.get(2));
+    }
+  };
   private boolean solveH(int row, int col, int level){
     if(level==board.length*board[0].length+1){
       return true;
     }
-      for(int i=0;i<moves.length;i++){
+    Collections.sort(possmoves, byorder);
+    for(int i=0;i<moves.length;i++){
       if(row+moves[i][0]<board.length&&
         row+moves[i][0]>=0&&
         col+moves[i][1]<board[0].length&&
@@ -201,12 +210,9 @@ public static void runTest(int i){
           possmoves.get(i).set(3,outgoing[row+moves[i][0]][col+moves[i][1]]);
       }
     }
-    Collections.sort(possmoves, new Comparator<ArrayList<Integer>>() {
-        private int compare(ArrayList<Integer> a1, ArrayList<Integer> a2){
-          return a1.get(3).compareTo(a2.get(3));
-        }
-    });
-    for(int j=0;j<possmoves.size();j++){
+    Collections.sort(possmoves, bymoves);
+
+    for(int i=0;i<possmoves.size();i++){
           if(addKnight(row+possmoves.get(i).get(0),col+possmoves.get(i).get(1),level)){
                 if(solveH(row+possmoves.get(i).get(0),col+possmoves.get(i).get(1),level+1)){
                   return true;
